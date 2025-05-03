@@ -70,4 +70,4 @@ RUN mkdir -p data game spam \
 USER www-data
 
 # الأمر الافتراضي لتشغيل بوت PHP
-CMD ["php", "index.php"]
+CMD gunicorn app:app & php index.php
