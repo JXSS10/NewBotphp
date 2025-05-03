@@ -10,10 +10,10 @@ RUN apk update && apk add --no-cache \
     libpng-dev \
     libjpeg-turbo-dev \
     freetype-dev \
-    oniguruma-dev \ # <--- فقط اجعل الـ backslash هنا
+    oniguruma-dev \ 
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) gd zip curl mbstring sockets bcmath pdo pdo_mysql \
-    && apk del curl-dev libzip-dev libpng-dev libjpeg-turbo-dev freetype-dev oniguruma-dev # <--- التعليق هنا لا يسبب مشكلة
+    && apk del curl-dev libzip-dev libpng-dev libjpeg-turbo-dev freetype-dev oniguruma-dev 
 
 # تثبيت Composer (مدير الحزم لـ PHP)
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
