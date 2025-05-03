@@ -10869,9 +10869,57 @@ if(($text == "السورس" || $text == "سورس") && $mso != null){
         ])
             ]);
         }
-//@X_XF8
-//@FROM_PHP
-//@musicalgeriam
-//@S_S0F
-// اشترك فالقنوات ليوصلك اخر الملفات واقوى البوتات الحصرية 
+
+
+
+
+
+
+
+
+
+$offset = 0;
+
+// ======= الحلقة الرئيسية للبوت =======
+while (true) {
+
+    // 1. جلب التحديثات من تليجرام
+    $updates = bot('getUpdates', [
+        'offset' => $offset,
+        'timeout' => 60, // انتظر حتى 60 ثانية
+    ]);
+
+    // 2. التحقق ومعالجة التحديثات إذا وجدت
+    if (isset($updates->result) && !empty($updates->result)) {
+        foreach ($updates->result as $update) {
+            // تحديث offset لتجنب التكرار
+            $offset = $update->update_id + 1;
+
+            // =========================================
+            //  <<< هنا ضع كل الكود الخاص بك لمعالجة >>>
+            //  <<< $update->message                 >>>
+            //  <<< $update->callback_query          >>>
+            //  <<< والأوامر والردود والمنطق ...الخ    >>>
+            // =========================================
+
+             // مثال بسيط جداً:
+             if (isset($update->message->text) && $update->message->text == '/ping') {
+                 bot('sendMessage', ['chat_id' => $update->message->chat->id, 'text' => 'Pong!']);
+             }
+             // ... (كل شروط if و elseif الخاصة بأوامرك هنا) ...
+
+        } // نهاية foreach
+
+    } // نهاية if (!empty($updates->result))
+
+    // (اختياري) إيقاف مؤقت قصير لتجنب استهلاك 100% من المعالج إذا حدث خطأ في الاتصال
+    // usleep(100000); // 0.1 ثانية
+
+} // ======= نهاية الحلقة while (true) =======
+
+// الكود لن يصل إلى هنا أبدًا في التشغيل الطبيعي للبوت
+echo "Bot script finished unexpectedly.\n";
+
 ?>
+
+
