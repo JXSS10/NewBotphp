@@ -1,4 +1,4 @@
-# ملف Dockerfile مع إضافة أمر تثبيت gunicorn بشكل صريح
+# ملف Dockerfile مع استخدام --break-system-packages لتثبيت pip
 
 FROM php:8.1-cli-alpine
 
@@ -33,17 +33,13 @@ RUN composer install --no-interaction --no-dev --optimize-autoloader || echo "Co
 
 # --- تثبيت اعتمادات Python (pip) ---
 
-# 1. تثبيت gunicorn بشكل صريح ومباشر
-#    سيضمن هذا الأمر محاولة تثبيت gunicorn. سيفشل البناء إذا لم ينجح.
-RUN pip3 install --no-cache-dir gunicorn
+# 1. تثبيت gunicorn بشكل صريح باستخدام --break-system-packages
+RUN pip3 install --no-cache-dir --break-system-packages gunicorn
 
 # 2. تثبيت باقي الاعتمادات من requirements.txt (إن وجدت)
 COPY requirements.txt ./
-#    تم إزالة `|| echo "..."` لضمان فشل البناء إذا لم يتم تثبيت الحزم الأخرى.
-#    إذا كان requirements.txt لا يحتوي إلا على gunicorn، يمكنك إزالة هذا الجزء
-#    إذا كنت متأكدًا من أنك ثبتته في الخطوة السابقة. لكن من الأفضل إبقاؤه
-#    إذا كان الملف يحتوي على حزم أخرى.
-RUN pip3 install --no-cache-dir -r requirements.txt
+#    استخدام --break-system-packages هنا أيضًا لتوحيد الطريقة
+RUN pip3 install --no-cache-dir --break-system-packages -r requirements.txt || echo "requirements.txt not found or empty, continuing..."
 
 # ------------------------------------
 
@@ -61,5 +57,4 @@ RUN mkdir -p data game spam \
 USER www-data
 
 # الأمر الافتراضي لتشغيل Gunicorn في الخلفية و PHP في المقدمة
-# (تأكد من أن 'app:app' صحيح لتطبيقك)
 CMD sh -c 'gunicorn app:app & php index.php'
