@@ -1,17 +1,17 @@
 {
-    "name": "JXSS10/NewBotphp",
+    "name": "jxss10/newbotphp", // <--- تغيير هذا السطر إلى أحرف صغيرة
     "description": "A Telegram bot written in PHP.",
     "type": "project",
     "require": {
-        "php": "^8.0",         
-        "ext-json": "*",      
-        "ext-curl": "*",      
-        "ext-mbstring": "*"   
+        "php": "^8.0",
+        "ext-json": "*",
+        "ext-curl": "*",
+        "ext-mbstring": "*"
     },
     "authors": [
         {
-            "name": "JXSS10", 
-            "email": "JXSS1@GMAIL.com" 
+            "name": "jxss10",
+            "email": "jxss10@gmail.com"
         }
     ],
     "minimum-stability": "stable",
@@ -22,6 +22,6 @@
         "sort-packages": true
     },
     "scripts": {
-        "start": "php index.php" 
+        "start": "php index.php"
     }
 }
