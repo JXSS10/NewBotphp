@@ -1,5 +1,5 @@
 {
-    "name": "jxss10/newbotphp", // <--- تغيير هذا السطر إلى أحرف صغيرة
+    "name": "jxss10/newbotphp", 
     "description": "A Telegram bot written in PHP.",
     "type": "project",
     "require": {
